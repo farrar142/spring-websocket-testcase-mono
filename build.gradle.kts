@@ -24,6 +24,11 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("io.projectreactor:reactor-test:3.6.5")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9")
+//	implementation("io.github.springwolf:springwolf-spring-boot-starter:1.12.0")
+	implementation("io.github.springwolf:springwolf-ui:1.12.0")
+//	implementation("io.github.springwolf:springwolf-kafka:1.12.0")
+	implementation("io.github.springwolf:springwolf-openapi:1.12.0")
+	implementation("io.github.springwolf:springwolf-stomp:1.12.0")
 }
 
 tasks.withType<Test> {
