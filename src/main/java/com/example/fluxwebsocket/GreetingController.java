@@ -21,15 +21,20 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public Greeting greeting(
-        @Parameter(description = "사용자의 이름이 담긴 메시지", required = true)
         HelloMessage message
     ) throws Exception {
         Thread.sleep(1000); // simulated delay
-        System.out.println("Received message: " + message.getName());
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 
     @Operation(summary = "OpenAPI 문서용 WebSocket 엔드포인트", description = "HTTP 요청 시 에러 발생")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "성공시 /topic/greetings로 메시지 전송",
+                    content = @Content(schema = @Schema(implementation = Greeting.class))
+            )
+    })
     @GetMapping("/app/hello")
     public Greeting mockGreeting(
             @Parameter(description = "사용자의 이름이 담긴 메시지", required = true)
