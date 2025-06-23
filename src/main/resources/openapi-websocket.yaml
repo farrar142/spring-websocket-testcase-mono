@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: FluxWebSocket STOMP API
+  version: "1.0"
+paths:
+  /gs-guide-websocket:
+    get:
+      summary: WebSocket/STOMP 연결
+      description: WebSocket 핸드셰이크를 통해 STOMP를 이용한 메시지 통신 경로를 연다.
+      responses:
+        '101':
+          description: WebSocket 업그레이드 성공
+  /app/hello:
+    post:
+      summary: 메시지 전송
+      description: STOMP로 구독된 "/topic/greetings" 목적지에 HelloMessage를 보낸다.
+      requestBody:
+        description: HelloMessage JSON
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HelloMessage'
+      responses:
+        '200':
+          description: Greeting 메시지 반환
+components:
+  schemas:
+    HelloMessage:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Test User"
+    Greeting:
+      type: object
+      properties:
+        content:
+          type: string
+          example: "Hello, Test User!"
