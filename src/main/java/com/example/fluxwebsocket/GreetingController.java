@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,5 +43,15 @@ public class GreetingController {
             @Parameter(description = "사용자의 이름이 담긴 메시지", required = true)
             HelloMessage message) {
         throw new UnsupportedOperationException("이 엔드포인트는 STOMP/WebSocket 통신 전용이므로 HTTP로는 사용할 수 없습니다.");
+    }
+
+    @MessageMapping("/sendtouser")
+    @SendToUser("/topic/greetings")
+    public Greeting sendToUser(
+        HelloMessage message
+    ) throws Exception {
+        Thread.sleep(1000); // simulated delay
+        System.out.println("Received message for user: " + message.getName());
+        return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 }

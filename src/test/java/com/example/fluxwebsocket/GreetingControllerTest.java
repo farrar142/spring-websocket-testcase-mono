@@ -1,19 +1,22 @@
 package com.example.fluxwebsocket;
 
+import java.lang.reflect.Type;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
-import org.springframework.messaging.simp.stomp.*;
-import org.springframework.web.socket.client.WebSocketClient;
+import org.springframework.messaging.simp.stomp.StompFrameHandler;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
+
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.lang.reflect.Type;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class GreetingControllerTest {
@@ -51,7 +54,7 @@ public class GreetingControllerTest {
         });
 
         session.send("/app/hello", new HelloMessage("Test User"));
-
+        System.out.println("done");
         StepVerifier.create(Mono.fromCallable(blockingQueue::take))
             .expectNext("Hello, Test User!")
             .expectComplete()
