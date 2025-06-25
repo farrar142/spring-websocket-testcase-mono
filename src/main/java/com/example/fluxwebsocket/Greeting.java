@@ -13,4 +13,14 @@ public class Greeting {
     public String getContent() {
         return content;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Greeting greeting = (Greeting) o;
+
+        return content != null ? content.equals(greeting.content) : greeting.content == null;
+    }
 }

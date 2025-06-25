@@ -15,8 +15,10 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import java.lang.reflect.Type;
 import java.util.Optional;
 import java.util.concurrent.*;
-
-class CustomWebSocketStompClient{
+//인증 정보(헤더,세션, 값)
+//메서드 체이닝
+//
+class CustomWebSocketStompClient<T>{
     StompSession session;
     BlockingQueue<Greeting> blockingQueue;
     public CustomWebSocketStompClient(int port) throws ExecutionException, InterruptedException {
@@ -31,7 +33,7 @@ class CustomWebSocketStompClient{
         ).get();
     }
 
-    public void subscribe(String topic){
+    public CustomWebSocketStompClient subscribe(String topic){
         session.subscribe(topic, new StompFrameHandler() {
             @Override
             public Type getPayloadType(StompHeaders headers) {
@@ -48,9 +50,11 @@ class CustomWebSocketStompClient{
                 }
             }
         });
+        return this;
     }
-    public void sendMessage(String destination, HelloMessage message) {
+    public CustomWebSocketStompClient sendMessage(String destination, HelloMessage message) {
         session.send(destination, message);
+        return this;
     }
     public Optional<Greeting> receiveMessage() throws InterruptedException {
         return Optional.ofNullable(blockingQueue.poll(1, TimeUnit.SECONDS));

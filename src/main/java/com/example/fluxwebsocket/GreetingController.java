@@ -26,7 +26,6 @@ public class GreetingController {
         HelloMessage message
     ) throws Exception {
         Thread.sleep(1000); // simulated delay
-        System.out.println("Received message: " + message.getName());
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 
@@ -51,7 +50,6 @@ public class GreetingController {
         HelloMessage message
     ) throws Exception {
         Thread.sleep(1000); // simulated delay
-        System.out.println("Received message for user: " + message.getName());
         return new Greeting("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
     }
 }
