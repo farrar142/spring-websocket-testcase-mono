@@ -4,8 +4,8 @@ public class StompConnectionBuilder{
     public StompConnectionBuilder(){
 
     }
-    public StompConnection connect(String url){
-        return new StompConnection(url);
+    public StompWebSocket connect(String url){
+        return new StompWebSocket(url);
     }
 
 }

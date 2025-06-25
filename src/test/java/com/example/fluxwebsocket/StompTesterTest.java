@@ -20,6 +20,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -38,13 +39,14 @@ public class StompTesterTest {
         stompTester.perform(
             builder->
                     builder.connect("ws://localhost:" + port + "/gs-guide-websocket")
+                    .userProperties(new HashMap<>())
                     .subscribe("/topic/greetings", Greeting.class)
                     .send("/app/hello", new HelloMessage("Test User"))
         )
             .andExpect(StompResult.isReceived(3, TimeUnit.SECONDS))
             .andDo(StompResult.print())
-            .andExpect(StompResult.isEquals(new Greeting("Hello, Test User!")));
-
+            .andExpect(StompResult.isEquals(new Greeting("Hello, Test User!")))
+            .andReturn();
 
     }
 }

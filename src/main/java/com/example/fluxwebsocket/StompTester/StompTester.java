@@ -28,7 +28,9 @@ public class StompTester{
     }
     public <T> StompResultActions<T> perform(Function<StompConnectionBuilder, StompInfo<T>> builder) throws ExecutionException, InterruptedException {
         StompInfo<T> info = builder.apply(new StompConnectionBuilder());
-        WebSocketStompClient stompClient = new WebSocketStompClient(new StandardWebSocketClient());
+        StandardWebSocketClient client = new StandardWebSocketClient();
+        client.setUserProperties(info.getProperties().getProperties());
+        WebSocketStompClient stompClient = new WebSocketStompClient(client);
         stompClient.setMessageConverter(defaultConverter);
         CompletableFuture<T> future = new CompletableFuture<>();
         StompSession stompSession = stompClient.connectAsync(
