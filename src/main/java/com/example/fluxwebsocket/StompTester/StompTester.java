@@ -37,7 +37,7 @@ public class StompTester{
         ).get();
         stompSession.subscribe(
                 info.getSubscriber().getTopic(),
-                new TypedStompFrameHandler(info.getSubscriber().getType(), future));
+                new TypedStompFrameHandler<>(info.getSubscriber().getType(), future));
         stompSession.send(
                 info.getSender().getDestination(),
                 info.getSender().getPayload()
