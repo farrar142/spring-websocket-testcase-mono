@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 
 import java.lang.reflect.Type;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TypedStompFrameHandler<T> implements StompFrameHandler {
     private final Class<T> type;
@@ -20,6 +21,7 @@ public class TypedStompFrameHandler<T> implements StompFrameHandler {
 
     @Override
     public void handleFrame(StompHeaders headers, Object payload) {
+        System.out.println("Received payload: " + payload);
         if (payload.getClass().equals(this.type)) {
             T data = (T) payload;
             future.complete(data);
