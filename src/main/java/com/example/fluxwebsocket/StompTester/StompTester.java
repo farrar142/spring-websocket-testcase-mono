@@ -26,7 +26,7 @@ public class StompTester{
         this.defaultConverter = converter;
         return this;
     }
-    public <T> StompResultActions<T> perform( StompConnectionBuilder<T> builder) throws ExecutionException, InterruptedException {
+    public <T> StompResultActions<T> perform(StompConnectionBuilder<T> builder) throws ExecutionException, InterruptedException {
         StandardWebSocketClient client = new StandardWebSocketClient();
 
         WebSocketHttpHeaders headers = new WebSocketHttpHeaders();
