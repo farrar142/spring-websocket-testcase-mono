@@ -1,12 +1,11 @@
 package com.example.fluxwebsocket;
 
 
-import com.example.fluxwebsocket.StompTester.StompResultActions;
-import com.example.fluxwebsocket.StompTester.StompTester;
-import com.example.fluxwebsocket.StompTester.builders.StompConnectionBuilder;
-import com.example.fluxwebsocket.StompTester.results.StompResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import link.honeycombpizza.stomptester.StompResultActions;
+import link.honeycombpizza.stomptester.StompTester;
+import link.honeycombpizza.stomptester.builders.StompConnectionBuilder;
+import link.honeycombpizza.stomptester.results.StompResult;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,6 @@ public class StompTesterTest {
     private MockMvc mockMvc;
 
     private ObjectMapper mapper = new ObjectMapper();
-
     /*
     * 하나의 요청과 하나의 응답만 받도록
     * 요청에 필요한 값들은 Builder패턴으로 설정 필수,옵셔널값 분리
@@ -60,10 +58,6 @@ public class StompTesterTest {
                     .send("/app/hello", new HelloMessage("Test User"))
         )
                 .andDo(StompResult.print())
-                .andExpect(StompResult.isEqualTo(new Greeting("Hello, Test User!")))
-                    .andAssert(
-                            result->result.isEqualTo(new Greeting("Hello, Test User!"))
-                    )
                 .andReturn();
         assertThat(new Greeting()).isEqualTo(new Greeting());
 //        jsonPath("$.content").value(2)

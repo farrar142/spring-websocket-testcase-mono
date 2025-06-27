@@ -1,6 +1,8 @@
 package com.example.fluxwebsocket;
 
+import link.honeycombpizza.stomptester.StompTester;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.converter.MessageConverter;
@@ -21,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
-//        config.setUserDestinationPrefix("/user"); 기본 프리픽스
+//        config.setUserDestinationPrefix("/user"); 기본 프리픽
     }
 
     @Override
@@ -38,5 +40,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         return true;
     }
 
+    @Bean
+    public StompTester stompTester(){
+        return new StompTester();
+    }
 
 }
